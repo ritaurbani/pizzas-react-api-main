@@ -25,12 +25,12 @@ function App() {
   }, []);
 
   const getPizzas = () => {
-    let url = `${apiUrl}/pizzas`
-    if (filter!=="all"){
-      url+=`?ingredient=filter`
+    let url = `${apiUrl}/pizzas`; // 1. Crea l'URL di base per l'API delle pizze
+    if (filter !== "all") { // 2. Verifica se il filtro è diverso da "all"-il codice aggiunge un parametro alla query string dell'URL.
+    url += `?ingredient=${filter}`; // 3. Se il filtro non è "all", aggiungi il parametro di query all'URL (filtra per ingrediente)
     }
-    axios.get(url).then((resp) => {
-      console.log(resp.data.pizze)
+    axios.get(url).then((resp) => { //Esegui la richiesta GET con l'URL costruito
+      console.log(resp.data.pizze) //Aggiorna lo stato 'menu' con l'elenco delle pizze ricevute
       setMenu(resp.data.pizze)
     })
   };
@@ -69,16 +69,14 @@ function App() {
   }
 
   const handleDelete = (id) => {
-console.log("delete", id)
-axios.delete(`${apiUrl}/pizzas/${id}`).then((resp) => {
+  console.log("delete", id)
+  axios.delete(`${apiUrl}/pizzas/${id}`).then((resp) => {
   console.log(resp)
   //per cancellare anche in locale una volta avuti i dati
   const newMenu = menu.filter((curPizza)=> curPizza.id !== id)
   setMenu(newMenu)
 })
 }
-
-
 
   return (
     <>
